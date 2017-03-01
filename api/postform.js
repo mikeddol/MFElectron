@@ -1,6 +1,6 @@
 /* jshint esversion: 6 */
-let postForm = (function () {
-  let Http = require('http');
+const postForm = (function () {
+  const Http = require('http');
 
   function getFormDataForPost(fields) {
     let post_data = [],
@@ -36,17 +36,20 @@ let postForm = (function () {
     return params;
   }
 
-  const postData = function (fields, options, headers) {
+  const postData = function (fields) {
     return new Promise(function (resolve, reject) {
 
       let headerparams = getFormDataForPost(fields),
         totalheaders = headerparams.headers;
 
-      for (let key in headers) {
-        totalheaders[key] = headers[key];
-      }
-
-      options.headers = totalheaders;
+      const options = {
+        host: 'www.mfinante.ro',
+        port: 80,
+        path: '/infocodfiscal.html',
+        method: 'POST',
+        encoding: 'utf8',
+        headers: totalheaders
+      };
 
       let request = Http.request(options, function (response) {
         response.body = '';
@@ -59,6 +62,8 @@ let postForm = (function () {
         response.on('end', function () {
           resolve(response);
         });
+      }).on('error', function (err) {
+        reject(err);
       });
 
       for (let i = 0; i < headerparams.postdata.length; i++) {
