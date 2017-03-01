@@ -12,23 +12,25 @@ let csvStream = csv
     codes.push(data.pop());
   }).on("end", function () {
     codes.shift();
-    getLocations(codes);
+    getData(codes).then(function (res) {
+      console.log(res);
+    });
   });
 stream.pipe(csvStream);
 
-
-
-const getLocations = function (codes) {
-  const locations = codes.map(function (cod) {
-    return api.getInfo(cod)
+const getData = function (codes) {
+  const bulkData = codes.map(function (code) {
+    return api.getInfo(code)
       .then(function (res) {
         return res;
       }).catch(function (err) {
-        console.error(err);
+        return err;
       });
   });
 
-  Promise.all(locations).then(function (values) {
-    console.log(values);
+  return Promise.all(bulkData).then(function (values) {
+    return values;
+  }).catch(function (err) {
+    return err;
   });
 };
