@@ -31,8 +31,7 @@ const api = (function () {
             fax: '',
             zipCode: '',
             tradeRegisterCode: '',
-            companyState: '',
-            lastProccessDate: ''
+            companyState: ''
           };
 
           var main = null;
