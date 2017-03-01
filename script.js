@@ -25,11 +25,7 @@ if (cod === undefined) {
 
 postform.postData({
   'cod': code
-}, options, {}, function (err, res) {
-
-  if (err) {
-    throw new Error("no good!");
-  }
+}, options, {}).then(function (res) {
 
   let result = {
     taxCode: cod,
