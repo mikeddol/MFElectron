@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/akagetsu/MFElectron#readme",
   "dependencies": {
-    "cheerio": "^0.22.0"
+    "cheerio": "^0.22.0",
+    "fast-csv": "^2.3.1"
   }
 }
