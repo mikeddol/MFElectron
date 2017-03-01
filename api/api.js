@@ -82,6 +82,8 @@ const api = (function () {
           } else {
             reject("Can not identify company with code: " + cod);
           }
+        }).catch(function (res) {
+          reject(res);
         });
     });
   };
