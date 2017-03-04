@@ -21,59 +21,14 @@ const api = (function () {
           'cod': code
         })
         .then(function (res) {
-
-          let result = {
-            taxCode: cod,
-            name: '',
-            county: '',
-            address: '',
-            phone: '',
-            fax: '',
-            zipCode: '',
-            tradeRegisterCode: '',
-            companyState: ''
-          };
-
-          var main = null;
+          let result = {};
           if (res.body) {
-
-            $("#main TABLE TR TD", res.body).each(function (idx, obj) {
-
-              main = $(obj).text();
-              if (main.indexOf('Denumire platitor') != -1) {
-                result.name = $(obj).next().text().replace(/([\r\n\t])+/g, "").trim();
-              }
-
-              if (main.indexOf('Adresa:') != -1) {
-                result.address = $(obj).next().text().replace(/([\r\n\t])+/g, "").trim();
-              }
-
-              if (main.indexOf('Judetul:') != -1) {
-                result.county = $(obj).next().text().replace(/([\r\n\t])+/g, "").trim();
-              }
-
-              if (main.indexOf('Numar de inmatriculare la Registrul') != -1) {
-                result.tradeRegisterCode = $(obj).next().text().replace(/([\r\n\t])+/g, "").trim();
-              }
-
-              if (main.indexOf('Codul postal:') != -1) {
-                result.zipCode = $(obj).next().text().replace(/([\r\n\t])+/g, "").trim();
-              }
-
-              if (main.indexOf('Telefon:') != -1) {
-                result.phone = $(obj).next().text().replace(/([\r\n\t])+/g, "").trim();
-              }
-
-              if (main.indexOf('Fax:') != -1) {
-                result.fax = $(obj).next().text().replace(/([\r\n\t])+/g, "").trim();
-              }
-
-              if (main.indexOf('Stare societate:') != -1) {
-                result.companyState = $(obj).next().text().replace(/([\r\n\t])+/g, "").trim();
-              }
+            $("#main TABLE TR", res.body).each(function (idx, obj) {
+              const td = $('TD', $(obj));
+              result[$(td[0]).text().trim()] = $(td[1]).text().replace(/([\r\n\t])+/g, "").trim();
             });
 
-            if (result.name.length !== 0) {
+            if (Object.keys(result).length !== 0) {
               resolve(result);
             } else {
               reject("Can not identify company!");
