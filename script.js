@@ -15,9 +15,6 @@ csv.fromPath(myPath)
 
     getData(codes)
       .then(function (fullData) {
-        return setHeaders(fullData);
-      })
-      .then(function (fullData) {
         return setData(fullData);
       })
       .then(function () {
@@ -25,48 +22,6 @@ csv.fromPath(myPath)
       });
 
   });
-
-const setHeaders = function (companies) {
-  return new Promise(function (resolve, reject) {
-    const refactoredCompanies = companies.map(function (company) {
-      let newCompany = {};
-      for (let key in company) {
-        if (!company.hasOwnProperty(key)) continue;
-
-        switch (key) {
-        case 'taxCode':
-          newCompany['CUI'] = company[key];
-          break;
-        case 'name':
-          newCompany['Nume'] = company[key];
-          break;
-        case 'address':
-          newCompany['Adresa'] = company[key];
-          break;
-        case 'tradeRegisterCode':
-          newCompany['Numar inmatriculare'] = company[key];
-          break;
-        case 'zipCode':
-          newCompany['Cod postal'] = company[key];
-          break;
-        case 'phone':
-          newCompany['Telefon'] = company[key];
-          break;
-        case 'fax':
-          newCompany['Fax'] = company[key];
-          break;
-        case 'companyState':
-          newCompany['Stare societate'] = company[key];
-          break;
-        default:
-          break;
-        }
-      }
-      return newCompany;
-    });
-    resolve(refactoredCompanies);
-  });
-};
 
 const getData = function (codes) {
   const bulkData = codes.map(function (code) {
@@ -78,11 +33,12 @@ const getData = function (codes) {
       });
   });
 
-  return Promise.all(bulkData).then(function (values) {
-    return values;
-  }).catch(function (err) {
-    return err;
-  });
+  return Promise.all(bulkData)
+    .then(function (values) {
+      return values;
+    }).catch(function (err) {
+      return err;
+    });
 };
 
 const setData = function (fullData) {
