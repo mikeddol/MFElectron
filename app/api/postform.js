@@ -1,5 +1,6 @@
 /* jshint esversion: 6 */
 const postForm = (function () {
+  'use strict';
   const Http = require('http');
 
   function getFormDataForPost(fields) {

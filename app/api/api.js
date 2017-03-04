@@ -1,5 +1,6 @@
 // jshint esversion:6
 const api = (function () {
+  'use strict';
   const $ = require('cheerio');
 
   const postform = require('./postform');
