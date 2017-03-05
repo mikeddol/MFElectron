@@ -11,7 +11,11 @@ let mainWindow;
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
-    height: 600
+    height: 600,
+    center: true,
+    maximizable: false,
+    fullscreenable: false,
+    resizable: false
   });
 
   mainWindow.loadURL(url.format({
@@ -20,7 +24,7 @@ function createWindow() {
     slashes: true
   }));
 
-  // mainWindow.webContents.openDevTools();
+  mainWindow.setMenu(null);
 
   mainWindow.on('closed', function () {
     mainWindow = null;
@@ -46,11 +50,28 @@ const ipc = require('electron').ipcMain,
 
 ipc.on('open-file-dialog', function (event) {
   dialog.showOpenDialog({
-    properties: ['openFile']
+    properties: ['openFile'],
+    filters: [{
+      name: 'Comma Separated Value Files',
+      extensions: ['csv']
+    }]
   }, function (files) {
-    if (files) {
-      mfApp.run(files.pop());
-      event.sender.send('selected-directory', files);
+    if (files && files.length === 1) {
+      mfApp.setInputPath(files.pop())
+        .then(function (resPath) {
+          event.sender.send('selected-directory', resPath);
+        }).catch(function (err) {
+          console.log(err);
+        });
     }
   });
+});
+
+ipc.on('perform-request', function (event) {
+  mfApp.run()
+    .then(function (endPath) {
+      event.sender.send('target-directory', endPath);
+    }).catch(function (err) {
+      console.log(err);
+    });
 });
