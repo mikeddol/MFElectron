@@ -3,12 +3,31 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Hello World!</title>
+  <title>MFinante Electron App</title>
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./node_modules/ladda/dist/ladda-themeless.min.css">
 </head>
 
-<body>
-  <button id="select-directory">Hello</button>
-  <p id="selected-file"></p>
+<body class="container">
+  <div class="row">
+    <div class="col-xs-4 col-xs-offset-4">
+      <form class="form">
+        <div class="form-group">
+          <label for="inputFile">CSV Input</label>
+          <button class="btn btn-primary" id="select-directory">Browse</button>
+          <p class="help-block">Select a CSV file</p>
+        </div>
+        <button class="btn btn-error ladda-buttom" data-style="expand-right" id="perform-request" disabled><span class="ladda-label">Submit</span></button>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-4 col-xs-offset-4">
+      <p id="selected-file"></p>
+      <a href="" id="ready-location"></a>
+    </div>
+  </div>
 </body>
 
 <script>
