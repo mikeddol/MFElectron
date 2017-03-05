@@ -1,0 +1,8 @@
+body {
+  overflow: hidden;
+  text-align: center;
+}
+
+.row {
+  margin-top: 100px;
+}
