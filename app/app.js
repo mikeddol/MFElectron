@@ -13,7 +13,7 @@ const app = (function () {
         reject("Invalid input path!");
       }
       inputPath = userInputPath;
-      resolve();
+      resolve(inputPath);
     });
   };
 
